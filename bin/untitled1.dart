@@ -108,7 +108,7 @@ class StudentManagementSystem {
     Student student = Student('John Doe', 20, '123 Main St', 'S001', 'A', [
       90,
       85,
-      82,
+      92,
     ]);
 
     // Creating a Teacher instance
