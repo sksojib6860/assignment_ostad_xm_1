@@ -1,9 +1,14 @@
-// Role interface
+// Call the main method
+void main() {
+  StudentManagementSystem.main();
+}
+
+// Interface: Role
 abstract class Role {
   void displayRole();
 }
 
-// Person class
+// Base Class: Person
 class Person implements Role {
   String name;
   int age;
@@ -12,89 +17,109 @@ class Person implements Role {
 
   Person(this.name, this.age, this.address);
 
-  String getName() => name;
-  int getAge() => age;
-  String getAddress() => address;
+  // Getter methods
+  String get getName => name;
+  int get getAge => age;
+  String get getAddress => address;
 
   @override
   void displayRole() {
-    print("Role: Undefined");
+    print('Role: Undefined');
   }
 }
 
-// Student class extending Person
+// Student Class
 class Student extends Person {
   String studentID;
   String grade;
   List<double> courseScores;
 
   Student(
-      String name,
-      int age,
-      String address,
-      this.studentID,
-      this.grade,
-      this.courseScores,
-      ) : super(name, age, address);
+    String name,
+    int age,
+    String address,
+    this.studentID,
+    this.grade,
+    this.courseScores,
+  ) : super(name, age, address);
 
   @override
   void displayRole() {
-    print("Role: Student");
+    print('Role: Student');
   }
 
   double calculateAverageScore() {
     if (courseScores.isEmpty) return 0.0;
-    double total = courseScores.reduce((a, b) => a + b);
-    return total / courseScores.length;
+    double sum = courseScores.reduce((a, b) => a + b);
+    return double.parse((sum / courseScores.length).toStringAsFixed(1));
+  }
+
+  void displayStudentInfo() {
+    print('Student Information:');
+    displayRole();
+    print('Name: $name');
+    print('Age: $age');
+    print('Address: $address');
+    print('Average Score: ${calculateAverageScore()}');
+    print('');
   }
 }
 
-// Teacher class extending Person
+// Teacher Class
 class Teacher extends Person {
   String teacherID;
   List<String> coursesTaught;
 
   Teacher(
-      String name,
-      int age,
-      String address,
-      this.teacherID,
-      this.coursesTaught,
-      ) : super(name, age, address);
+    String name,
+    int age,
+    String address,
+    this.teacherID,
+    this.coursesTaught,
+  ) : super(name, age, address);
 
   @override
   void displayRole() {
-    print("Role: Teacher");
+    print('Role: Teacher');
   }
 
   void displayCoursesTaught() {
-    print("Courses Taught:");
+    print('Courses Taught:');
     for (var course in coursesTaught) {
-      print("- $course");
+      print('- $course');
     }
+  }
+
+  void displayTeacherInfo() {
+    print('Teacher Information:');
+    displayRole();
+    print('Name: $name');
+    print('Age: $age');
+    print('Address: $address');
+    displayCoursesTaught();
+    print('');
   }
 }
 
-// Example usage
-void main() {
-  Student student = Student(
-    "Alice",
-    20,
-    "123 Main St",
-    "S123",
-    "A",
-    [85.5, 90.0, 78.5],
-  );
-  student.displayRole();
-  print("Average Score: ${student.calculateAverageScore()}");
+// Main Class: StudentManagementSystem
+class StudentManagementSystem {
+  static void main() {
+    // Creating a Student instance
+    Student student = Student('John Doe', 20, '123 Main St', 'S001', 'A', [
+      90,
+      85,
+      82,
+    ]);
 
-  Teacher teacher = Teacher(
-    "Mr. Smith",
-    45,
-    "456 Elm St",
-    "T456",
-    ["Math", "Physics", "Chemistry"],
-  );
-  teacher.displayRole();
-  teacher.displayCoursesTaught();
+    // Creating a Teacher instance
+    Teacher teacher = Teacher('Mrs. Smith', 35, '456 Oak St', 'T001', [
+      'Math',
+      'English',
+      'Bangla',
+    ]);
+
+    // Display Information
+    student.displayStudentInfo();
+    teacher.displayTeacherInfo();
+  }
 }
